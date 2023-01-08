@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3560796974
+CRC: 1420250981
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1c91d595143a77258e036d30076f01bb
+    Hash: d14744e6574aa0f7ede70f9c022d7507
   TypeTreeHash:
     serializedVersion: 2
     Hash: 80481c417d4ed3cc366bc5ad63973d7e
@@ -159,6 +159,7 @@ Assets:
 - Assets/_ChebGonaz/ChebGonaz_SkeletonArcherTier2.prefab
 - Assets/_ChebGonaz/ChebGonaz_PoisonSkeleton.prefab
 - Assets/_ChebGonaz/ChebGonaz_SpiritPylon.prefab
+- Assets/_ChebGonaz/ChebGonaz_SkeletonCrossbow.prefab
 - Assets/_ChebGonaz/ChebGonaz_NecromancerHood.prefab
 - Assets/_ChebGonaz/ChebGonaz_SkeletonAxe.prefab
 - Assets/_ChebGonaz/SetEffect_NecromancyArmor2.asset

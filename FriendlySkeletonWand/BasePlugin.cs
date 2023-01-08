@@ -118,6 +118,10 @@ namespace FriendlySkeletonWand
                 GameObject skeletonBow2Prefab = LoadPrefabFromBundle(skeletonBow2Item.PrefabName, chebgonazAssetBundle);
                 ItemManager.Instance.AddItem(new SkeletonBow2().GetCustomItemFromPrefab(skeletonBow2Prefab));
 
+                SkeletonCrossbow skeletonCrossbowItem = new SkeletonCrossbow();
+                GameObject skeletonCrossbowPrefab = LoadPrefabFromBundle(skeletonCrossbowItem.PrefabName, chebgonazAssetBundle);
+                ItemManager.Instance.AddItem(new SkeletonCrossbow().GetCustomItemFromPrefab(skeletonCrossbowPrefab));
+
                 SkeletonHelmetLeather skeletonHelmetLeatherItem = new SkeletonHelmetLeather();
                 GameObject skeletonHelmetLeatherPrefab = LoadPrefabFromBundle(skeletonHelmetLeatherItem.PrefabName, chebgonazAssetBundle);
                 ItemManager.Instance.AddItem(skeletonHelmetLeatherItem.GetCustomItemFromPrefab(skeletonHelmetLeatherPrefab));

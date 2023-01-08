@@ -165,6 +165,7 @@
     <Compile Include="Items\BlackIronChest.cs" />
     <Compile Include="Items\BlackIronLegs.cs" />
     <Compile Include="Items\BlackIronHelmet.cs" />
+    <Compile Include="Items\SkeletonCrossbow.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
