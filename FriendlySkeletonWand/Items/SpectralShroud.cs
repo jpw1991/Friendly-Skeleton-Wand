@@ -18,33 +18,43 @@ namespace FriendlySkeletonWand
         public static ConfigEntry<int> necromancySkillBonus;
         public static ConfigEntry<int> delayBetweenWraithSpawns;
 
+        public static ConfigEntry<CraftingTable> craftingStationRequired;
+        public static ConfigEntry<int> craftingStationLevel;
+        public static ConfigEntry<string> craftingCost;
+
         private float wraithLastSpawnedAt;
 
         public override void CreateConfigs(BaseUnityPlugin plugin)
         {
             base.CreateConfigs(plugin);
 
-            allowed = plugin.Config.Bind("Server config", "SpectralShroudAllowed",
+            allowed = plugin.Config.Bind("SpectralShroud (Server Synced)", "SpectralShroudAllowed",
                 true, new ConfigDescription("Whether crafting a Spectral Shroud is allowed or not.", null,
                 new ConfigurationManagerAttributes { IsAdminOnly = true }));
 
-            spawnWraith = plugin.Config.Bind("Server config", "SpectralShroudSpawnWraith",
+            craftingStationRequired = plugin.Config.Bind("SpectralShroud (Server Synced)", "Spectral Shroud Crafting Station",
+                CraftingTable.Workbench, new ConfigDescription("Crafting station where Spectral Shroud is available", null,
+                new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            craftingStationLevel = plugin.Config.Bind("SpectralShroud (Server Synced)", "Spectral Shroud Crafting Station Level",
+                1, new ConfigDescription("Crafting station level required to craft Spectral Shroud", null,
+                new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            craftingCost = plugin.Config.Bind("SpectralShroud (Server Synced)", "Spectral Shroud Crafting Costs",
+                "Chain:5,TrollHide:10", new ConfigDescription("Materials needed to craft Spectral Shroud", null,
+                new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            spawnWraith = plugin.Config.Bind("SpectralShroud (Server Synced)", "SpectralShroudSpawnWraith",
                 true, new ConfigDescription("Whether wraiths spawn or not.", null,
                 new ConfigurationManagerAttributes { IsAdminOnly = true }));
 
-            necromancySkillBonus = plugin.Config.Bind("Server config", "SpectralShroudSkillBonus",
+            necromancySkillBonus = plugin.Config.Bind("SpectralShroud (Server Synced)", "SpectralShroudSkillBonus",
                 10, new ConfigDescription("How much wearing the item should raise the Necromancy level (set to 0 to have no set effect at all).", null,
                 new ConfigurationManagerAttributes { IsAdminOnly = true }));
 
-            delayBetweenWraithSpawns = plugin.Config.Bind("Server config", "SpectralShroudWraithDelay",
+            delayBetweenWraithSpawns = plugin.Config.Bind("SpectralShroud (Server Synced)", "SpectralShroudWraithDelay",
                 30, new ConfigDescription("How much time must pass after a wraith spawns before a new one is able to spawn.", null,
                 new ConfigurationManagerAttributes { IsAdminOnly = true }));
-        }
-
-        public override CustomItem GetCustomItem(Sprite icon=null)
-        {
-            Jotunn.Logger.LogError("I shouldn't be called");
-            return null;
         }
 
         public CustomItem GetCustomItemFromPrefab(GameObject prefab)
@@ -52,11 +62,20 @@ namespace FriendlySkeletonWand
             ItemConfig config = new ItemConfig();
             config.Name = "$item_friendlyskeletonwand_spectralshroud";
             config.Description = "$item_friendlyskeletonwand_spectralshroud_desc";
+
             if (allowed.Value)
             {
-                config.CraftingStation = "piece_workbench";
-                config.AddRequirement(new RequirementConfig("Chain", 5));
-                config.AddRequirement(new RequirementConfig("TrollHide", 10));
+                // set recipe requirements
+                this.SetRecipeReqs(
+                    config,
+                    craftingCost,
+                    craftingStationRequired,
+                    craftingStationLevel
+                );
+            }
+            else
+            {
+                config.Enabled = false;
             }
 
             CustomItem customItem = new CustomItem(prefab, false, config);

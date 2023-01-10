@@ -29,11 +29,15 @@ if ($Target.Equals("DebugServer")){
 # Test some preliminaries
 ("$TargetPath",
  "$ValheimPath",
- "$ValheimServerPath",
  "$(Get-Location)\libraries"
 ) | % {
     if (!(Test-Path "$_")) {Write-Error -ErrorAction Stop -Message "$_ folder is missing"}
+    if ("$ValheimServerPath"){
+        if (!(Test-Path "$ValheimServerPath")) {Write-Error -ErrorAction Stop -Message "$ValheimServerPath folder is missing"}
+    }
 }
+
+
 
 # Plugin name without ".dll"
 $name = "$TargetAssembly" -Replace('.dll')

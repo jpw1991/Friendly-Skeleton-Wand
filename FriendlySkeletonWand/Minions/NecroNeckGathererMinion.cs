@@ -28,19 +28,19 @@ namespace FriendlySkeletonWand.Minions
 
         public static void CreateConfigs(BaseUnityPlugin plugin)
         {
-            allowed = plugin.Config.Bind("Server config", "NecroNeckGathererAllowed",
+            allowed = plugin.Config.Bind("NecroNeckGatherer (Server Synced)", "NecroNeckGathererAllowed",
                 true, new ConfigDescription("Whether the NecroNeck Gatherer is allowed or not.", null,
                 new ConfigurationManagerAttributes { IsAdminOnly = true }));
-            lookRadius = plugin.Config.Bind("Server config", "NecroNeckGathererLookRadius",
+            lookRadius = plugin.Config.Bind("NecroNeckGatherer (Server Synced)", "NecroNeckGathererLookRadius",
                 50f, new ConfigDescription("The radius in which the NecroNeck Gatherer can see items from.", null,
                 new ConfigurationManagerAttributes { IsAdminOnly = true }));
-            pickupRadius = plugin.Config.Bind("Server config", "NecroNeckGathererPickupRadius",
+            pickupRadius = plugin.Config.Bind("NecroNeckGatherer (Server Synced)", "NecroNeckGathererPickupRadius",
                 10f, new ConfigDescription("The radius in which the NecroNeck Gatherer can pickup items from.", null,
                 new ConfigurationManagerAttributes { IsAdminOnly = true }));
-            dropoffPointRadius = plugin.Config.Bind("Server config", "NecroNeckGathererDropoffPointRadius",
+            dropoffPointRadius = plugin.Config.Bind("NecroNeckGatherer (Server Synced)", "NecroNeckGathererDropoffPointRadius",
                 100f, new ConfigDescription("The radius in which the NecroNeck Gatherer looks for a container to store its load in.", null,
                 new ConfigurationManagerAttributes { IsAdminOnly = true }));
-            updateDelay = plugin.Config.Bind("Server config", "NecroNeckGathererUpdateDelay",
+            updateDelay = plugin.Config.Bind("NecroNeckGatherer (Server Synced)", "NecroNeckGathererUpdateDelay",
                 3f, new ConfigDescription("The delay, in seconds, between item searching & pickup attempts. Attention: small values may impact performance.", null,
                 new ConfigurationManagerAttributes { IsAdminOnly = true }));
         }

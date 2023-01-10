@@ -49,46 +49,52 @@ namespace FriendlySkeletonWand
 
         public override void CreateConfigs(BaseUnityPlugin plugin)
         {
-            followByDefault = plugin.Config.Bind("Client config", "FollowByDefault",
+            followByDefault = plugin.Config.Bind("Wands (Client)", "FollowByDefault",
                 false, new ConfigDescription("Whether minions will automatically be set to follow upon being created or not."));
 
-            CreateMinionConfig = plugin.Config.Bind("Client config", ItemName+"CreateMinion",
+            CreateMinionConfig = plugin.Config.Bind("Keybinds (Client)", ItemName+"CreateMinion",
                 KeyCode.B, new ConfigDescription("The key to create a warrior minion with."));
-            CreateMinionGamepadConfig = plugin.Config.Bind("Client config", ItemName+"CreateMinionGamepad",
+
+            CreateMinionGamepadConfig = plugin.Config.Bind("Keybinds (Client)", ItemName+"CreateMinionGamepad",
                 InputManager.GamepadButton.ButtonSouth,
                 new ConfigDescription("The key to gamepad button to create a warrior minion with."));
 
-            CreateArcherMinionConfig = plugin.Config.Bind("Client config", ItemName+"CreateArcher",
+            CreateArcherMinionConfig = plugin.Config.Bind("Keybinds (Client)", ItemName+"CreateArcher",
                 KeyCode.H, new ConfigDescription("The key to create an archer minion with."));
-            CreateArcherMinionGamepadConfig = plugin.Config.Bind("Client config", ItemName+"CreateArcherGamepad",
+
+            CreateArcherMinionGamepadConfig = plugin.Config.Bind("Keybinds (Client)", ItemName+"CreateArcherGamepad",
                 InputManager.GamepadButton.ButtonSouth,
                 new ConfigDescription("The key to gamepad button to create an archer minion with."));
 
-            FollowConfig = plugin.Config.Bind("Client config", ItemName+"Follow",
+            FollowConfig = plugin.Config.Bind("Keybinds (Client)", ItemName+"Follow",
                 KeyCode.F, new ConfigDescription("The key to tell minions to follow."));
-            FollowGamepadConfig = plugin.Config.Bind("Client config", ItemName+"FollowGamepad",
+
+            FollowGamepadConfig = plugin.Config.Bind("Keybinds (Client)", ItemName+"FollowGamepad",
                 InputManager.GamepadButton.ButtonWest,
                 new ConfigDescription("The gamepad button to tell minions to follow."));
 
-            WaitConfig = plugin.Config.Bind("Client config", ItemName+"Wait",
+            WaitConfig = plugin.Config.Bind("Keybinds (Client)", ItemName+"Wait",
                 KeyCode.T, new ConfigDescription("The key to tell minions to wait."));
-            WaitGamepadConfig = plugin.Config.Bind("Client config", ItemName+"WaitGamepad",
+
+            WaitGamepadConfig = plugin.Config.Bind("Keybinds (Client)", ItemName+"WaitGamepad",
                 InputManager.GamepadButton.ButtonEast,
                 new ConfigDescription("The gamepad button to tell minions to wait."));
 
-            TeleportConfig = plugin.Config.Bind("Client config", ItemName+"Teleport",
+            TeleportConfig = plugin.Config.Bind("Keybinds (Client)", ItemName+"Teleport",
                 KeyCode.G, new ConfigDescription("The key to teleport following minions to you."));
-            TeleportGamepadConfig = plugin.Config.Bind("Client config", ItemName+"TeleportGamepad",
+
+            TeleportGamepadConfig = plugin.Config.Bind("Keybinds (Client)", ItemName+"TeleportGamepad",
                 InputManager.GamepadButton.SelectButton,
                 new ConfigDescription("The gamepad button to teleport following minions to you."));
 
-            AttackTargetConfig = plugin.Config.Bind("Client config", ItemName+"Target",
+            AttackTargetConfig = plugin.Config.Bind("Keybinds (Client)", ItemName+"Target",
                 KeyCode.R, new ConfigDescription("The key to tell minions to go to a specific target."));
-            AttackTargetGamepadConfig = plugin.Config.Bind("Client config", ItemName+"TargetGamepad",
+
+            AttackTargetGamepadConfig = plugin.Config.Bind("Keybinds (Client)", ItemName+"TargetGamepad",
                 InputManager.GamepadButton.StartButton,
                 new ConfigDescription("The gamepad button to tell minions to go to a specific target."));
 
-            UnlockExtraResourceConsumptionConfig = plugin.Config.Bind("Client config", ItemName + "UnlockExtraResourceConsumption",
+            UnlockExtraResourceConsumptionConfig = plugin.Config.Bind("Keybinds (Client)", ItemName + "UnlockExtraResourceConsumption",
                 KeyCode.LeftShift, new ConfigDescription("The key to permit consumption of additional resources when creating the minion eg. iron to make an armored skeleton."));
         }
 

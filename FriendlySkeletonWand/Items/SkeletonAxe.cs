@@ -11,12 +11,6 @@ namespace FriendlySkeletonWand
         public override string ItemName { get { return "ChebGonaz_SkeletonAxe"; } }
         public override string PrefabName { get { return "ChebGonaz_SkeletonAxe.prefab"; } }
 
-        public override CustomItem GetCustomItem(Sprite icon=null)
-        {
-            Jotunn.Logger.LogError("I shouldn't be called");
-            return null;
-        }
-
         public CustomItem GetCustomItemFromPrefab(GameObject prefab)
         {
             ItemConfig config = new ItemConfig();

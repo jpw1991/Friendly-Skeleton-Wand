@@ -245,25 +245,13 @@ namespace FriendlySkeletonWand
                     );
                 #endregion
 
-                #region Structures
-                Jotunn.Logger.LogInfo($"Loading {SpiritPylon.PrefabName}...");
-
+                #region Structures   
+                
+                SpiritPylon spiritPylon = new SpiritPylon();
                 GameObject spiritPylonPrefab = chebgonazAssetBundle.LoadAsset<GameObject>(SpiritPylon.PrefabName);
-                if (spiritPylonPrefab == null)
-                {
-                    Jotunn.Logger.LogError($"AddCustomStructures: {SpiritPylon.PrefabName} is null!");
-                    return;
-                }
                 spiritPylonPrefab.AddComponent<SpiritPylon>();
-
-                PieceConfig spiritPylon = new PieceConfig
-                {
-                    PieceTable = SpiritPylon.allowed.Value ? SpiritPylon.PieceTable : "",
-                    Requirements = SpiritPylon.allowed.Value ? SpiritPylon.GetRequirements() : new RequirementConfig[] { },
-                    Icon = chebgonazAssetBundle.LoadAsset<Sprite>(SpiritPylon.IconName),
-                };
-
-                PieceManager.Instance.AddPiece(new CustomPiece(spiritPylonPrefab, false, spiritPylon));
+                PieceManager.Instance.AddPiece(new SpiritPylon().GetCustomPieceFromPrefab(spiritPylonPrefab, chebgonazAssetBundle.LoadAsset<Sprite>(SpiritPylon.IconName)));
+            
                 #endregion
             }
             catch (Exception ex)
@@ -340,8 +328,8 @@ namespace FriendlySkeletonWand
         [HarmonyPrefix]
         static void addBonesToDropList(ref List<CharacterDrop.Drop> ___m_drops)
         {
-            if (SkeletonWand.boneFragmentsDroppedAmountMin.Value != 0
-                && SkeletonWand.boneFragmentsDroppedAmountMax.Value != 0)
+            if (SkeletonWand.boneFragmentsDroppedAmountMin.Value >= 0
+                && SkeletonWand.boneFragmentsDroppedAmountMax.Value > 0)
             {
                 CharacterDrop.Drop bones = new CharacterDrop.Drop();
                 bones.m_prefab = ZNetScene.instance.GetPrefab("BoneFragments");

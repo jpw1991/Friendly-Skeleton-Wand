@@ -5,13 +5,17 @@ using UnityEngine;
 using Jotunn.Configs;
 using Jotunn.Managers;
 using BepInEx.Configuration;
-
+using System.Linq;
+using System;
+using FriendlySkeletonWand;
+using Jotunn.Entities;
 
 namespace FriendlySkeletonWand
 {
     internal class SpiritPylon : MonoBehaviour
     {
         public static ConfigEntry<bool> allowed;
+        public static ConfigEntry<string> craftingCost;
         public static ConfigEntry<float> sightRadius;
         public static ConfigEntry<float> ghostDuration;
         public static ConfigEntry<float> delayBetweenGhosts;
@@ -24,36 +28,109 @@ namespace FriendlySkeletonWand
 
         private float ghostLastSpawnedAt;
 
-        public static RequirementConfig[] GetRequirements()
+        //Jotunn.Logger.LogInfo($"Loading {SpiritPylon.PrefabName}...");
+         //           if (spiritPylonPrefab == null)
+          //          {
+            //            Jotunn.Logger.LogError($"AddCustomStructures: {SpiritPylon.PrefabName} is null!");
+              //          return;
+                //    }
+
+    //spiritPylonPrefab.AddComponent<SpiritPylon>();
+
+      //              PieceConfig spiritPylon = new PieceConfig();
+    // spiritPylon.PieceTable = "";
+    //SpiritPylon.SetRequirements(spiritPylon);
+      //              spiritPylon.Icon = chebgonazAssetBundle.LoadAsset<Sprite>(SpiritPylon.IconName);
+
+                    
+        //        }
+
+        public CustomPiece GetCustomPieceFromPrefab(GameObject prefab, Sprite icon)
         {
-            return new RequirementConfig[]
+            PieceConfig config = new PieceConfig();
+            config.Name = "ChebGonaz_SpiritPylon";
+            config.Description = "Spirit Pylon";
+
+            if (allowed.Value)
             {
-                new RequirementConfig("Stone", 15, 0, true),
-                new RequirementConfig("Wood", 15, 0, true),
-                new RequirementConfig("BoneFragments", 15, 0, true),
-                new RequirementConfig("SurtlingCore", 1, 0, true),
-            };
+                // set recipe requirements
+                SetRecipeReqs(config, craftingCost);
+            }
+            else
+            {
+                config.Enabled = false;
+            }
+
+            config.Icon = icon;
+            config.PieceTable = "_HammerPieceTable";
+            config.Category = "Misc";
+
+            CustomPiece customPiece = new CustomPiece(prefab, false, config);
+            if (customPiece == null)
+            {
+                Jotunn.Logger.LogError($"AddCustomPieces: {PrefabName}'s CustomPiece is null!");
+                return null;
+            }
+            if (customPiece.PiecePrefab == null)
+            {
+                Jotunn.Logger.LogError($"AddCustomPieces: {PrefabName}'s PiecePrefab is null!");
+                return null;
+            }
+
+            return customPiece;
+        }
+
+
+        public void SetRecipeReqs(PieceConfig config, ConfigEntry<string> craftingCost)
+        {
+            // function to add a single material to the recipe
+            void addMaterial(string material)
+            {
+                string[] materialSplit = material.Split(':');
+                string materialName = materialSplit[0];
+                int materialAmount = int.Parse(materialSplit[1]);
+                config.AddRequirement(new RequirementConfig(materialName, materialAmount, 0, true));
+            }
+
+            // build the recipe. material config format ex: Wood:5,Stone:1,Resin:1
+            if (craftingCost.Value.Contains(','))
+            {
+                string[] materialList = craftingCost.Value.Split(',');
+
+                foreach (string material in materialList)
+                {
+                    addMaterial(material);
+                }
+            }
+            else
+            {
+                addMaterial(craftingCost.Value);
+            }
         }
 
         public static void CreateConfigs(BaseUnityPlugin plugin)
         {
-            allowed = plugin.Config.Bind("Server config", "SpiritPylonAllowed",
+            allowed = plugin.Config.Bind("SpiritPylon (Server Synced)", "SpiritPylonAllowed",
                 true, new ConfigDescription("Whether making a Spirit Pylon is allowed or not.", null,
                 new ConfigurationManagerAttributes { IsAdminOnly = true }));
 
-            sightRadius = plugin.Config.Bind("Server config", "SpiritPylonSightRadius",
+            craftingCost = plugin.Config.Bind("SpiritPylon (Server Synced)", "Spirit Pylon Build Costs",
+                "Stone:15,Wood:15,BoneFragments:15,SurtlingCore:1", new ConfigDescription("Materials needed to build Spirit Pylon", null,
+                new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+            sightRadius = plugin.Config.Bind("SpiritPylon (Server Synced)", "SpiritPylonSightRadius",
                 30f, new ConfigDescription("How far a Spirit Pylon can see enemies.", null,
                 new ConfigurationManagerAttributes { IsAdminOnly = true }));
 
-            ghostDuration = plugin.Config.Bind("Server config", "SpiritPylonGhostDuration",
+            ghostDuration = plugin.Config.Bind("SpiritPylon (Server Synced)", "SpiritPylonGhostDuration",
                 30f, new ConfigDescription("How long a Spirit Pylon's ghost persists.", null,
                 new ConfigurationManagerAttributes { IsAdminOnly = true }));
 
-            delayBetweenGhosts = plugin.Config.Bind("Server config", "SpiritPylonDelayBetweenGhosts",
+            delayBetweenGhosts = plugin.Config.Bind("SpiritPylon (Server Synced)", "SpiritPylonDelayBetweenGhosts",
                 5f, new ConfigDescription("How long a Spirit Pylon must wait before being able to spawn another ghost.", null,
                 new ConfigurationManagerAttributes { IsAdminOnly = true }));
 
-            maxGhosts = plugin.Config.Bind("Server config", "SpiritPylonMaxGhosts",
+            maxGhosts = plugin.Config.Bind("SpiritPylon (Server Synced)", "SpiritPylonMaxGhosts",
                 3, new ConfigDescription("The maximum number of ghosts that a Spirit Pylon can spawn.", null,
                 new ConfigurationManagerAttributes { IsAdminOnly = true }));
         }
